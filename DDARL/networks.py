@@ -42,18 +42,18 @@ class FeedForwardNet_v2(nn.Module):
         self.in2_dim = in2_dim
 
         self.fcs1 = nn.Linear(in_dim,hidden_size)
-        self.fcs1.weight.data = fanin_init(self.fcs1.weight.data.size())
+        #self.fcs1.weight.data = fanin_init(self.fcs1.weight.data.size())
         self.fcs2 = nn.Linear(hidden_size,hidden_size)
-        self.fcs2.weight.data = fanin_init(self.fcs2.weight.data.size())
+        #self.fcs2.weight.data = fanin_init(self.fcs2.weight.data.size())
 
         self.fca1 = nn.Linear(in2_dim,hidden_size)
-        self.fca1.weight.data = fanin_init(self.fca1.weight.data.size())
+        #self.fca1.weight.data = fanin_init(self.fca1.weight.data.size())
 
         self.fc2 = nn.Linear(hidden_size*2, hidden_size)
-        self.fc2.weight.data = fanin_init(self.fc2.weight.data.size())
+        #self.fc2.weight.data = fanin_init(self.fc2.weight.data.size())
 
         self.fc3 = nn.Linear(hidden_size, out_dim)
-        self.fc3.weight.data.uniform_(-0.3,0.3)
+        #self.fc3.weight.data.uniform_(-0.003,0.003)
         #self.out_activation = nn.Sigmoid()
 
     def forward(self, state, noise):

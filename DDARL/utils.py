@@ -2,7 +2,6 @@ import numpy as np
 import math
 import torch.nn.init as weight_init
 from sklearn.mixture import GaussianMixture
-import torch
 
 
 def fanin_init(size, fanin=None):
@@ -137,22 +136,3 @@ def KL_diverge_approx(gan, xsList, ysList, rsList, dsList, ganTrainEpoch, gmm_q=
 	accKLjs = gmm_js(gmm_p, gmm_q, n_samples=10**5)
 
 	return accKL, accKLjs, gmm_q
-
-
-def get_flat_params_from(model):
-    params = []
-    for param in model.parameters():
-        params.append(param.data.view(-1))
-
-    flat_params = torch.cat(params)
-    return flat_params
-
-
-def set_flat_params_to(model, flat_params):
-    prev_ind = 0
-    for param in model.parameters():
-        flat_size = int(np.prod(list(param.size())))
-        param.data.copy_(
-            flat_params[prev_ind:prev_ind + flat_size].view(param.size()))
-        prev_ind += flat_size
-    
