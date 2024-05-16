@@ -68,13 +68,13 @@ def load_cython_ext(mujoco_path):
     """
     if "glfw" in sys.modules and "mujoco" in abspath(sys.modules["glfw"].__file__):
         print(
-            """
-WARNING: Existing glfw python module detected!
+        """
+            WARNING: Existing glfw python module detected!
 
-MuJoCo comes with its own version of GLFW, so it's preferable to use that one.
+            MuJoCo comes with its own version of GLFW, so it's preferable to use that one.
 
-The easy solution is to `import mujoco_py` _before_ `import glfw`.
-"""
+            The easy solution is to `import mujoco_py` _before_ `import glfw`.
+        """
         )
 
     lib_path = os.path.join(mujoco_path, "bin")
@@ -224,7 +224,6 @@ def manually_link_libraries(mujoco_path, raw_cext_dll_path):
 
 
 class MujocoExtensionBuilder:
-
     CYMJ_DIR_PATH = abspath(dirname(__file__))
 
     def __init__(self, mujoco_path):
@@ -284,7 +283,6 @@ class MujocoExtensionBuilder:
 
 
 class WindowsExtensionBuilder(MujocoExtensionBuilder):
-
     def __init__(self, mujoco_path):
         super().__init__(mujoco_path)
         os.environ["PATH"] += ";" + join(mujoco_path, "bin")
@@ -292,7 +290,6 @@ class WindowsExtensionBuilder(MujocoExtensionBuilder):
 
 
 class LinuxCPUExtensionBuilder(MujocoExtensionBuilder):
-
     def __init__(self, mujoco_path):
         super().__init__(mujoco_path)
 
@@ -309,7 +306,6 @@ class LinuxCPUExtensionBuilder(MujocoExtensionBuilder):
 
 
 class LinuxGPUExtensionBuilder(MujocoExtensionBuilder):
-
     def __init__(self, mujoco_path):
         super().__init__(mujoco_path)
 
@@ -328,7 +324,6 @@ class LinuxGPUExtensionBuilder(MujocoExtensionBuilder):
 
 
 class MacExtensionBuilder(MujocoExtensionBuilder):
-
     def __init__(self, mujoco_path):
         super().__init__(mujoco_path)
 
