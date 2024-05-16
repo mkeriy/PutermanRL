@@ -1,14 +1,19 @@
 import numpy as np
 import torch
-import torch.nn as nn
-from dm_control import suite
-from ddpg_model import Agent, Buffer, OUNoise
-from ddpg_model import return_state_dim, process_state
-import sys
-from logger import load_parameters
-from config import config
+import argparse
+from src.model import Agent, Buffer, OUNoise
+from src.utils.logger import load_parameters
+from src.utils import get_config
 import dmc2gym
 import cv2
+
+
+parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+
+parser.add_argument("-c", "--config")
+args = parser.parse_args()
+
+config = get_config(args.config)
 
 torch.manual_seed(config["seed"])
 np.random.seed(config["seed"])

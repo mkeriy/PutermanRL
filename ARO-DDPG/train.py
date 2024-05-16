@@ -1,17 +1,21 @@
 import numpy as np
 import torch
-import torch.nn as nn
-from dm_control import suite
-from ddpg_model import Agent, Buffer, OUNoise
-from ddpg_model import return_state_dim, process_state
-import sys
-from logger import save_parameters
-from config import config
+from src.model import Agent, Buffer, OUNoise
+import argparse
+from src.utils import save_parameters, get_config
 import dmc2gym
 
 import wandb
 
-wandb.init(project="ARO-DDPG-walker-walk", entity="science_", config=config)
+
+parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+
+parser.add_argument("-c", "--config")
+args = parser.parse_args()
+
+config = get_config(args.config)
+
+wandb.init(project=config["project_name"], entity=config["entity"], config=config)
 
 torch.manual_seed(config["seed"])
 np.random.seed(config["seed"])
@@ -29,13 +33,13 @@ config["device"] = (
     torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
 )
 
-buffer = Buffer(config["buffer_size"])
+buffer = Buffer(int(config["buffer_size"]))
 agent = Agent(env_eval, config)
-total_env_steps = config["total_env_steps"]
-batch_size = config["batch_size"]
-learning_start = config["warmup_samples"]
-eval_freq = config["eval_freq"]
-update_freq = config["update_freq"]
+total_env_steps = int(config["total_env_steps"])
+batch_size = int(config["batch_size"])
+learning_start = int(config["warmup_samples"])
+eval_freq = int(config["eval_freq"])
+update_freq = int(config["update_freq"])
 
 noise = OUNoise(env.action_spec())
 epi_len = config["epi_len"]

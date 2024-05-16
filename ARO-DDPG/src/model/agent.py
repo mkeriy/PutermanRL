@@ -4,7 +4,7 @@ import torch.nn.functional as F
 from torch.optim import Adam
 import random
 
-from src.logger import Logger
+from src.utils import Logger
 from src.model.actor import Actor
 from src.model.critic import Critic
 
